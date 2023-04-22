@@ -1,9 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+		<Version>0.0.1</Version>
+		<FileVersion>0.0.1.0</FileVersion>
+		<AssemblyName>WebWindowNetCore.Electron</AssemblyName>
+		<AssemblyVersion>0.0.1.0</AssemblyVersion>
+		<Authors>Uwe Riegel</Authors>
+    <Company>Uwe Riegel</Company>		
+		<Description>Dependencies for Electron for package WebWindowNetCore. Please look there for further information.</Description>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/uriegel/WebWindowNetCore.Electron</PackageProjectUrl>
+		<PackageReleaseNotes>Beginning...</PackageReleaseNotes>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageTags>DotNet Electron WebView</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>1591</NoWarn>
     <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
@@ -15,6 +33,16 @@
   <PropertyGroup Condition="'$(IsLinux)'=='true'">
       <DefineConstants>Linux</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>  
+
 
   <ItemGroup>
     <PackageReference Include="WebWindowNetCore" Version="5.1.0" />
