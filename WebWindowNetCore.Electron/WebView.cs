@@ -17,7 +17,11 @@ public class WebView : WebWindowNetCore.Base.WebView
             {
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                FileName = "electron", // TODO electron.cmd Windows
+#if Linux                
+                FileName = "electron", 
+#else
+                FileName = "electron.cmd", 
+#endif                
                 CreateNoWindow = true,
                 Arguments = null,
             },
