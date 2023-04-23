@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "tsc": "tsc -p Electron/typescript"
+  },
+  "devDependencies": {
+    "electron": "^24.1.2",
+    "typescript": "^5.0.4"
+  }
+}

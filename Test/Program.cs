@@ -9,7 +9,7 @@ WebView
     .Create()
     .InitialBounds(600, 800)
     .ResourceIcon("icon")
-    .Title("Commander")
+    .Title("WebView Test")
     .QueryString("?theme=windows")
     .SaveBounds()
     .DebugUrl("http://localhost:3000")

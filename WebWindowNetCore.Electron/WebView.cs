@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json;
 using WebWindowNetCore.Base;
 using WebWindowNetCore.Data;
 
@@ -18,18 +19,19 @@ public class WebView : WebWindowNetCore.Base.WebView
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
 #if Linux                
-                FileName = "electron", 
+                FileName = "electron",
 #else
                 FileName = "electron.cmd", 
-#endif                
+#endif
                 CreateNoWindow = true,
-                Arguments = null,
-            },
+                Arguments = Path.Combine(Directory.GetCurrentDirectory(), "../resources/electron/main.js"),
+        },
             EnableRaisingEvents = true
         };
 
         electron.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
         electron.ErrorDataReceived += (s, e) => Console.Error.WriteLine(e.Data);
+        electron.StartInfo.Environment.Add("StartInfo", JsonSerializer.Serialize(new StartInfo(settings!.Title), JsonDefault.Value));
         electron.Start();
         electron.BeginOutputReadLine();
         electron.BeginErrorReadLine();
@@ -45,3 +47,7 @@ public class WebView : WebWindowNetCore.Base.WebView
 
     bool saveBounds;
 }
+
+record StartInfo(
+    string Title
+);
