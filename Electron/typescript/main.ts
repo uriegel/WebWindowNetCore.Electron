@@ -24,7 +24,7 @@ const createWindow = async () => {
                 const bounds = JSON.parse(localStorage.getItem('window-bounds') || '{}')
                 const isMaximized = localStorage.getItem('isMaximized')
                 if (bounds.width && bounds.height)
-                    window.api.invoke('show', JSON.stringify({action: 2, width: bounds.width, height: bounds.height, isMaximized: isMaximized == 'true'}))
+                    window.api.invoke('show', JSON.stringify({width: bounds.width, height: bounds.height, isMaximized: isMaximized == 'true', x: bounds.x, y: bounds.y}))
                 else
                     window.api.invoke('show')`)
         if (startInfo.showDevTools)
@@ -35,18 +35,27 @@ const createWindow = async () => {
     })
 
     var timer: NodeJS.Timeout
-    win.on("resize", () => {
+
+    const onBounds = () => {
         clearTimeout(timer)
         timer = setTimeout(() => {
             if (!win.isMaximized())
                 win.webContents.executeJavaScript(`
-                    localStorage.setItem('window-bounds', JSON.stringify({width: ${win.getBounds().width}, height: ${win.getBounds().height}}))
+                    localStorage.setItem('window-bounds', JSON.stringify({
+                        width: ${win.getBounds().width}, 
+                        height: ${win.getBounds().height},
+                        x: ${win.getBounds().x},
+                        y: ${win.getBounds().y}
+                    }))
                     localStorage.setItem('isMaximized', false)
                 `)
             else
                 win.webContents.executeJavaScript(`localStorage.setItem('isMaximized', true)`)
         }, 400)
-    })
+    }
+
+    win.on("resize", onBounds)
+    win.on("move", onBounds)
 
     ipcMain.handle('openDevTools', async (event, arg) => {
         return new Promise(function (resolve) {
@@ -56,11 +65,18 @@ const createWindow = async () => {
     })
     ipcMain.handle('show', async (event, arg) => {
         return new Promise(function (resolve) {
-            var action = JSON.parse(arg)
-            win.setBounds({ width: action.width, height: action.height })
-            if (action.isMaximized) 
-                win.maximize()
-            else
+            if (arg) {
+                var action = JSON.parse(arg)
+                console.log("arg", arg, action, action.width)
+                if (action.width && action.height && action.x && action.y) {
+                    console.log("Hallo")
+                    win.setBounds({ width: action.width, height: action.height, x: action.x, y: action.y })
+                }
+                if (action.isMaximized) 
+                    win.maximize()
+                else
+                    win.show()
+            } else
                 win.show()
             resolve("")
         })
