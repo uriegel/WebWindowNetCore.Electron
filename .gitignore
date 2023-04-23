@@ -4,3 +4,4 @@ WebWindowNetCore.Electron/bin
 WebWindowNetCore.Electron/obj
 node_modules
 resources/electron/main.js
+resources/electron/preload.js

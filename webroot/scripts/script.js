@@ -5,7 +5,7 @@ const btn1 = document.getElementById("button")
 const btn2 = document.getElementById("button2")
 const btnDevTools = document.getElementById("buttonDevTools")
 
-btnDevTools.onclick = webViewShowDevTools
+btnDevTools.onclick = () => webViewShowDevTools()
 
 btn1.onclick = async () => {
     var res = await webViewRequest("cmd1", {

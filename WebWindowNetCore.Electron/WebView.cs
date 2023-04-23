@@ -28,6 +28,14 @@ public class WebView : WebWindowNetCore.Base.WebView
         mainjsStream?.CopyTo(file);
         file.Flush();
 
+        var preloadjs = path.AppendPath("preload.js");
+        var preloadjsStream = System.Reflection.Assembly
+            .GetExecutingAssembly()
+            ?.GetManifestResourceStream("PreloadElectron");
+        using var preloadFile = File.Create(preloadjs);
+        preloadjsStream?.CopyTo(preloadFile);
+        preloadFile.Flush();
+
         string? iconfilename = null;
         if (settings?.ResourceIcon != null)
         {
@@ -70,7 +78,9 @@ public class WebView : WebWindowNetCore.Base.WebView
         electron.StartInfo.Environment.Add("StartInfo", JsonSerializer.Serialize(new StartInfo(
                 settings!.Title,
                 url!,
-                iconfilename
+                iconfilename,
+                settings?.DevTools == true
+
             ), JsonDefault.Value));
         electron.Start();
         electron.BeginOutputReadLine();
@@ -91,5 +101,6 @@ public class WebView : WebWindowNetCore.Base.WebView
 record StartInfo(
     string Title,
     string Url,
-    string? IconPath
+    string? IconPath,
+    bool ShowDevTools
 );

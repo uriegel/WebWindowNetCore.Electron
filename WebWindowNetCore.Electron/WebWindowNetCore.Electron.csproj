@@ -42,6 +42,9 @@
     <EmbeddedResource Include="../resources/electron/main.js">
       <LogicalName>MainElectron</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="../resources/electron/preload.js">
+      <LogicalName>PreloadElectron</LogicalName>
+    </EmbeddedResource>
   </ItemGroup> 
 
   <ItemGroup>

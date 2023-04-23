@@ -1,6 +1,4 @@
-﻿using AspNetExtensions;
-using LinqTools;
-using WebWindowNetCore;
+﻿using WebWindowNetCore;
 
 var sseEventSource = WebView.CreateEventSource<Event>();
 StartEvents(sseEventSource.Send);
