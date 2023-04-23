@@ -26,7 +26,7 @@ WebView
     .DebuggingEnabled()
 #endif            
     .Build()
-    .Run("de.uriegel.Commander");    
+    .Run("de.uriegel.WebWindowTest");    
 
 void StartEvents(Action<Event> onChanged)   
 {

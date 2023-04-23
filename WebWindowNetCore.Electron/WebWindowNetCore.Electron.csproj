@@ -39,10 +39,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="../resources/electron/main.js">
+      <LogicalName>MainElectron</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup> 
+
+  <ItemGroup>
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>  
-
 
   <ItemGroup>
     <PackageReference Include="WebWindowNetCore" Version="5.1.0" />
