@@ -57,7 +57,6 @@ const createWindow = async () => {
     ipcMain.handle('show', async (event, arg) => {
         return new Promise(function (resolve) {
             var action = JSON.parse(arg)
-            console.log("show", action, action.width, action.height, action.isMaximized)
             win.setBounds({ width: action.width, height: action.height })
             if (action.isMaximized) 
                 win.maximize()
