@@ -11,7 +11,8 @@
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "dependsOn": ["tsc electron"]
         },
         {
             "label": "publish",
@@ -23,7 +24,8 @@
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "dependsOn": ["tsc electron"]
         },
         {
             "label": "watch",
@@ -36,6 +38,11 @@
                 "${workspaceFolder}/Test/Test.csproj"
             ],
             "problemMatcher": "$msCompile"
+        }, 
+        {
+            "label": "tsc electron",
+            "type": "npm",
+            "script": "tsc"
         }
     ]
 }

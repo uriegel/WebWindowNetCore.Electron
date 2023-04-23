@@ -9,6 +9,33 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="../webroot/index.html">
+      <LogicalName>webroot/index.html</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="../webroot/css/styles.css">
+      <LogicalName>webroot/css/styles.css</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="../webroot/scripts/script.js">
+      <LogicalName>webroot/scripts/script.js</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsWindows)'=='true'">
+    <Content Include="./icon.ico" />
+    <EmbeddedResource Include="./icon.ico">
+      <LogicalName>icon</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup> 
+
+  <ItemGroup Condition="'$(IsLinux)'=='true'">
+    <EmbeddedResource Include="./icon.png">
+      <LogicalName>icon</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup> 
 
 </Project>

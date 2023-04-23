@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Text.Json;
 using CsTools.Extensions;
 using LinqTools;
-using WebWindowNetCore.Base;
 using WebWindowNetCore.Data;
 
 namespace WebWindowNetCore;
@@ -25,8 +24,29 @@ public class WebView : WebWindowNetCore.Base.WebView
         var mainjsStream = System.Reflection.Assembly
             .GetExecutingAssembly()
             ?.GetManifestResourceStream("MainElectron");
-        using var file = File.OpenWrite(mainjs);
-        mainjsStream?.CopyTo(file);        
+        using var file = File.Create(mainjs);
+        mainjsStream?.CopyTo(file);
+        file.Flush();
+
+        string? iconfilename = null;
+        if (settings?.ResourceIcon != null)
+        {
+#if Linux                
+            iconfilename = path.AppendPath("icon.png");
+#else
+            iconfilename = path.AppendPath("icon.ico");
+#endif
+            var icon = Resources.Get(settings.ResourceIcon!);
+            using var iconfile = File.Create(iconfilename);
+            icon?.CopyTo(iconfile);
+            iconfile.Flush();
+        }
+
+        var url = Debugger.IsAttached && !string.IsNullOrEmpty(settings?.DebugUrl)
+            ? settings?.DebugUrl
+            : settings?.Url != null
+            ? settings.Url
+            : $"http://localhost:{settings?.HttpSettings?.Port ?? 80}{settings?.HttpSettings?.WebrootUrl}/{settings?.HttpSettings?.DefaultHtml}";
 
         var electron = new Process()
         {
@@ -44,11 +64,14 @@ public class WebView : WebWindowNetCore.Base.WebView
         },
             EnableRaisingEvents = true
         };
-        file.Flush();
 
         electron.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
         electron.ErrorDataReceived += (s, e) => Console.Error.WriteLine(e.Data);
-        electron.StartInfo.Environment.Add("StartInfo", JsonSerializer.Serialize(new StartInfo(settings!.Title), JsonDefault.Value));
+        electron.StartInfo.Environment.Add("StartInfo", JsonSerializer.Serialize(new StartInfo(
+                settings!.Title,
+                url!,
+                iconfilename
+            ), JsonDefault.Value));
         electron.Start();
         electron.BeginOutputReadLine();
         electron.BeginErrorReadLine();
@@ -66,5 +89,7 @@ public class WebView : WebWindowNetCore.Base.WebView
 }
 
 record StartInfo(
-    string Title
+    string Title,
+    string Url,
+    string? IconPath
 );

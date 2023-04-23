@@ -12,15 +12,11 @@ WebView
     .Title("WebView Test")
     .QueryString("?theme=windows")
     .SaveBounds()
-    .DebugUrl("http://localhost:3000")
+    //.DebugUrl("http://localhost:3000")
     //.Url($"file://{Directory.GetCurrentDirectory()}/webroot/index.html")
     .ConfigureHttp(http => http
         .ResourceWebroot("webroot", "/web")
         .UseSse("sse/test", sseEventSource)
-        .MapGet("video", context => 
-            context
-                .SideEffect(c => Console.WriteLine("Range request"))
-            .StreamRangeFile("/home/uwe/Videos/Buster Keaton - Sherlock Jr..mp4"))        
         .Build())
 #if DEBUG            
     .DebuggingEnabled()
@@ -37,7 +33,7 @@ void StartEvents(Action<Event> onChanged)
             {
                 Thread.Sleep(5000);
                 onChanged(new($"Ein Event {counter++}"));
-           }
+            }
         })
         {
             IsBackground = true
