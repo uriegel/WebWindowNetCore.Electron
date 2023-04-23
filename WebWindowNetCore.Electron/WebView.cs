@@ -79,7 +79,8 @@ public class WebView : WebWindowNetCore.Base.WebView
                 settings!.Title,
                 url!,
                 iconfilename,
-                settings?.DevTools == true
+                settings?.DevTools == true,
+                settings?.SaveBounds == true
 
             ), JsonDefault.Value));
         electron.Start();
@@ -102,5 +103,6 @@ record StartInfo(
     string Title,
     string Url,
     string? IconPath,
-    bool ShowDevTools
+    bool ShowDevTools,
+    bool SaveBounds
 );
