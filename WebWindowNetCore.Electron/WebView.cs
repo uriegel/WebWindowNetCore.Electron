@@ -95,8 +95,6 @@ public class WebView : WebWindowNetCore.Base.WebView
         => settings = builder.Data;
 
     WebViewSettings? settings;
-
-    bool saveBounds;
 }
 
 record StartInfo(
