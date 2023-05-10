@@ -68,10 +68,8 @@ const createWindow = async () => {
             if (arg) {
                 var action = JSON.parse(arg)
                 console.log("arg", arg, action, action.width)
-                if (action.width && action.height && action.x && action.y) {
-                    console.log("Hallo")
+                if (action.width && action.height && action.x && action.y) 
                     win.setBounds({ width: action.width, height: action.height, x: action.x, y: action.y })
-                }
                 if (action.isMaximized) 
                     win.maximize()
                 else
