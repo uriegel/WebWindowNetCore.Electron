@@ -18,7 +18,7 @@ public class WebView : WebWindowNetCore.Base.WebView
                         .AppendPath(".config")
                         .AppendPath(gtkId
                                     .WhiteSpaceToNull()
-                                    .GetOrDefault("de.uriegel.webwindownetcore.electron"));
+                                    ?? "de.uriegel.webwindownetcore.electron");
         Directory.CreateDirectory(path);
         var mainjs = path.AppendPath("mainjs.js");
         var mainjsStream = System.Reflection.Assembly
