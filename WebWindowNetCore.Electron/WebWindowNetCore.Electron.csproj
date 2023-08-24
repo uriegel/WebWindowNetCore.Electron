@@ -5,10 +5,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-		<Version>2.0.0</Version>
-		<FileVersion>2.0.0.0</FileVersion>
+		<Version>2.1.0</Version>
+		<FileVersion>2.1.0.0</FileVersion>
+		<AssemblyVersion>2.1.0.0</AssemblyVersion>
 		<AssemblyName>WebWindowNetCore.Electron</AssemblyName>
-		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 		<Authors>Uwe Riegel</Authors>
     <Company>Uwe Riegel</Company>		
 		<Description>Dependencies for Electron for package WebWindowNetCore. Please look there for further information.</Description>
@@ -53,7 +53,7 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="WebWindowNetCore" Version="6.0.0" />
+    <PackageReference Include="WebWindowNetCore" Version="6.1.0" />
   </ItemGroup>
 
 </Project>
