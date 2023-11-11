@@ -73,14 +73,19 @@ public class WebView : WebWindowNetCore.Base.WebView
             EnableRaisingEvents = true
         };
 
-        electron.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
+        electron.OutputDataReceived += (s, e) =>
+        {
+            if (e.Data != null && settings?.OnFilesDrop != null)
+                settings.OnFilesDrop(JsonSerializer.Deserialize<FilesDrop>(e.Data, JsonDefault.Value)?.Paths ?? Array.Empty<string>());
+        };
         electron.ErrorDataReceived += (s, e) => Console.Error.WriteLine(e.Data);
         electron.StartInfo.Environment.Add("StartInfo", JsonSerializer.Serialize(new StartInfo(
                 settings!.Title,
                 url!,
                 iconfilename,
                 settings?.DevTools == true,
-                settings?.SaveBounds == true
+                settings?.SaveBounds == true,
+                settings?.OnFilesDrop != null
 
             ), JsonDefault.Value));
         electron.Start();
@@ -102,5 +107,8 @@ record StartInfo(
     string Url,
     string? IconPath,
     bool ShowDevTools,
-    bool SaveBounds
+    bool SaveBounds,
+    bool DropFiles
 );
+
+record FilesDrop(string[]? Paths);

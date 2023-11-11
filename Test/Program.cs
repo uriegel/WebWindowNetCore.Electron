@@ -10,6 +10,10 @@ WebView
     .Title("WebView Test")
     .QueryString("?theme=windows")
     .SaveBounds()
+    .OnFilesDrop(paths => 
+    {
+        var arg = paths;
+    })
     //.DebugUrl("http://localhost:3000")
     //.Url($"file://{Directory.GetCurrentDirectory()}/webroot/index.html")
     .ConfigureHttp(http => http

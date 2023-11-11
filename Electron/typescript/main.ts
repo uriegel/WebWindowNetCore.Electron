@@ -6,6 +6,7 @@ interface StartInfo {
     iconPath?: string
     showDevTools: boolean
     saveBounds: boolean
+    dropFiles: boolean
 }
 
 const startInfo: StartInfo = JSON.parse(process.env['StartInfo']!)
@@ -32,7 +33,13 @@ const createWindow = async () => {
                 async function webViewShowDevTools() {
                     await window.api.invoke('openDevTools')
                 }`)
-    })
+        if (startInfo.dropFiles)
+            win.webContents.executeJavaScript(`
+                async function webViewDropFiles(files) {
+                    let paths = Array.from(files).map(f => f.path)
+                    await window.api.invoke('dropFiles', JSON.stringify({paths}))
+                }`)
+        })
 
     var timer: NodeJS.Timeout
 
@@ -67,7 +74,6 @@ const createWindow = async () => {
         return new Promise(function (resolve) {
             if (arg) {
                 var action = JSON.parse(arg)
-                console.log("arg", arg, action, action.width)
                 if (action.width && action.height && action.x && action.y) 
                     win.setBounds({ width: action.width, height: action.height, x: action.x, y: action.y })
                 if (action.isMaximized) 
@@ -76,6 +82,12 @@ const createWindow = async () => {
                     win.show()
             } else
                 win.show()
+            resolve("")
+        })
+    })
+    ipcMain.handle('dropFiles', async (event, arg) => {
+        return new Promise(function (resolve) {
+            console.log(arg)
             resolve("")
         })
     })

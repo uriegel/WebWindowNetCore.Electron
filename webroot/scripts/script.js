@@ -15,8 +15,7 @@ dropZone.addEventListener("drop", e => {
     e.preventDefault()
     e.stopPropagation()
 
-    let pathes = Array.from(e.dataTransfer.files).map(f => f.path)
-    console.log("pathes", pathes)
+    webViewDropFiles(e.dataTransfer.files)
 })
 
 btnDevTools.onclick = () => webViewShowDevTools()
