@@ -5,9 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-		<Version>2.3.0</Version>
-		<FileVersion>2.3.0.0</FileVersion>
-		<AssemblyVersion>2.3.0.0</AssemblyVersion>
+		<Version>2.4.0</Version>
+		<FileVersion>2.4.0.0</FileVersion>
+		<AssemblyVersion>2.4.0.0</AssemblyVersion>
 		<AssemblyName>WebWindowNetCore.Electron</AssemblyName>
 		<Authors>Uwe Riegel</Authors>
     <Company>Uwe Riegel</Company>		
@@ -53,7 +53,7 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="WebWindowNetCore" Version="6.3.0" />
+    <PackageReference Include="WebWindowNetCore" Version="6.4.0" />
   </ItemGroup>
 
 </Project>
