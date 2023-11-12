@@ -76,7 +76,11 @@ public class WebView : WebWindowNetCore.Base.WebView
         electron.OutputDataReceived += (s, e) =>
         {
             if (e.Data != null && settings?.OnFilesDrop != null)
-                settings.OnFilesDrop(JsonSerializer.Deserialize<FilesDrop>(e.Data, JsonDefault.Value)?.Paths ?? Array.Empty<string>());
+            {
+                var filesDrop = JsonSerializer.Deserialize<FilesDrop>(e.Data, JsonDefault.Value);
+                if (filesDrop != null)
+                    settings.OnFilesDrop(filesDrop.Id, filesDrop.Paths);
+            }
         };
         electron.ErrorDataReceived += (s, e) => Console.Error.WriteLine(e.Data);
         electron.StartInfo.Environment.Add("StartInfo", JsonSerializer.Serialize(new StartInfo(
@@ -111,4 +115,4 @@ record StartInfo(
     bool DropFiles
 );
 
-record FilesDrop(string[]? Paths);
+record FilesDrop(string Id, string[] Paths);

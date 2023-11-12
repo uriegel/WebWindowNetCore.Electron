@@ -10,7 +10,7 @@ WebView
     .Title("WebView Test")
     .QueryString("?theme=windows")
     .SaveBounds()
-    .OnFilesDrop(paths => 
+    .OnFilesDrop((id, paths) => 
     {
         var arg = paths;
     })
