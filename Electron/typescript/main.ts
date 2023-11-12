@@ -35,9 +35,9 @@ const createWindow = async () => {
                 }`)
         if (startInfo.dropFiles)
             win.webContents.executeJavaScript(`
-                async function webViewDropFiles(id, files) {
+                async function webViewDropFiles(id, move, files) {
                     let paths = Array.from(files).map(f => f.path)
-                    await window.api.invoke('dropFiles', JSON.stringify({paths, id}))
+                    await window.api.invoke('dropFiles', JSON.stringify({paths, move, id}))
                 }`)
         })
 

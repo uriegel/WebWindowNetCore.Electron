@@ -15,7 +15,7 @@ dropZone.addEventListener("drop", e => {
     e.preventDefault()
     e.stopPropagation()
 
-    webViewDropFiles("dropZone", e.dataTransfer.files)
+    webViewDropFiles("dropZone", true, e.dataTransfer.files)
 })
 
 btnDevTools.onclick = () => webViewShowDevTools()
