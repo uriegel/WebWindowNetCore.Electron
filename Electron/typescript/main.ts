@@ -39,7 +39,14 @@ const createWindow = async () => {
                     let paths = Array.from(files).map(f => f.path)
                     await window.api.invoke('dropFiles', JSON.stringify({paths, move, id}))
                 }`)
-        })
+        // win.webContents.executeJavaScript(`
+        //     async function webViewStartDrag(file) {
+        //         await window.api.invoke('startDrag', file)
+        //     }`)
+                
+    })
+    
+
 
     var timer: NodeJS.Timeout
 
@@ -91,6 +98,15 @@ const createWindow = async () => {
             resolve("")
         })
     })
+
+
+    // ipcMain.handle('startDrag', (event, arg) => {
+    //     event.sender.startDrag({
+    //         files: ["/home/uwe/klein.jpg"],
+    //         file: "/home/uwe/klein.jpg",
+    //         icon: "/daten/Projekte/WebWindowNetCore.Electron/Test/icon.png"
+    //       })
+    // })
 }
 
 app.on('ready', createWindow)

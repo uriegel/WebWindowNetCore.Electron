@@ -5,10 +5,11 @@ const btn1 = document.getElementById("button")
 const btn2 = document.getElementById("button2")
 const btnDevTools = document.getElementById("buttonDevTools")
 const dropZone = document.getElementById("dropZone")
+const dragZone = document.getElementById("dragZone")
 
 dropZone.addEventListener("dragover", e => {
     e.preventDefault()
-    e.stopPropagation()
+    e.stopPropagation() 
 })
 
 dropZone.addEventListener("drop", e => {
@@ -17,6 +18,12 @@ dropZone.addEventListener("drop", e => {
 
     webViewDropFiles("dropZone", true, e.dataTransfer.files)
 })
+
+dragZone.addEventListener("dragstart", e => {
+    
+    webViewStartDrag("Affe.txt")
+})
+
 
 btnDevTools.onclick = () => webViewShowDevTools()
 
