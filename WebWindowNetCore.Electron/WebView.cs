@@ -50,11 +50,12 @@ public class WebView : WebWindowNetCore.Base.WebView
             iconfile.Flush();
         }
 
-        var url = Debugger.IsAttached && !string.IsNullOrEmpty(settings?.DebugUrl)
+        var url = (Debugger.IsAttached && !string.IsNullOrEmpty(settings?.DebugUrl)
             ? settings?.DebugUrl
             : settings?.Url != null
             ? settings.Url
-            : $"http://localhost:{settings?.HttpSettings?.Port ?? 80}{settings?.HttpSettings?.WebrootUrl}/{settings?.HttpSettings?.DefaultHtml}";
+            : $"http://localhost:{settings?.HttpSettings?.Port ?? 80}{settings?.HttpSettings?.WebrootUrl}/{settings?.HttpSettings?.DefaultHtml}")
+                + settings?.Query ?? "";
 
         var electron = new Process()
         {
